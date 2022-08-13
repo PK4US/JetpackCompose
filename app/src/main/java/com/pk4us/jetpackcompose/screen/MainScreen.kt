@@ -1,10 +1,11 @@
 package com.pk4us.jetpackcompose.screen
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -53,13 +54,56 @@ fun MainScreen() {
                 ) {
                     Text(
                         modifier = Modifier.padding(top = 8.dp, start = 8.dp),
-                        text = "20 Jun 2022 13:00", style = TextStyle(fontSize = 16.sp),
+                        text = "20 Jun 2022 13:00",
+                        style = TextStyle(fontSize = 16.sp),
                         color = Color.White
                     )
                     AsyncImage(
                         model = "https://cdn.weatherapi.com/weather/64x64/day/113.png",
-                        contentDescription = "im2", modifier = Modifier.size(35.dp).padding(top = 3.dp, end = 8.dp)
+                        contentDescription = "im2",
+                        modifier = Modifier
+                            .size(45.dp)
+                            .padding(top = 3.dp, end = 8.dp)
                     )
+                }
+                Text(
+                    text = "Berlin",
+                    style = TextStyle(fontSize = 24.sp),
+                    color = Color.White
+                )
+                Text(
+                    text = "28°С",
+                    style = TextStyle(fontSize = 65.sp),
+                    color = Color.White
+                )
+                Text(
+                    text = "Sunny",
+                    style = TextStyle(fontSize = 16.sp),
+                    color = Color.White
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_search),
+                            contentDescription = "im3",
+                            tint = Color.White
+                        )
+                    }
+                    Text(
+                        text = "31°C/24°C",
+                        style = TextStyle(fontSize = 16.sp),
+                        color = Color.White
+                    )
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_sync),
+                            contentDescription = "im4",
+                            tint = Color.White
+                        )
+                    }
                 }
             }
         }
