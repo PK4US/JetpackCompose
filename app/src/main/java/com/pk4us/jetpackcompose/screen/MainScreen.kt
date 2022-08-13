@@ -1,34 +1,29 @@
 package com.pk4us.jetpackcompose.screen
 
-import android.widget.TableLayout
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.google.accompanist.pager.*
 import com.pk4us.jetpackcompose.R
+import com.pk4us.jetpackcompose.data.WeatherModel
 import com.pk4us.jetpackcompose.ui.theme.BlueLight
 import kotlinx.coroutines.launch
 
 @Composable
-@Preview(showBackground = true)
 fun MainCard() {
-
     Column(
         modifier = Modifier
             .padding(5.dp)
@@ -36,8 +31,7 @@ fun MainCard() {
         Card(
             modifier = Modifier.fillMaxWidth(),
             backgroundColor = BlueLight,
-            elevation = 0.dp,
-            shape = RoundedCornerShape(10.dp)
+            elevation = 0.dp
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
@@ -48,26 +42,32 @@ fun MainCard() {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        modifier = Modifier.padding(top = 8.dp, start = 8.dp),
                         text = "20 Jun 2022 13:00",
-                        style = TextStyle(fontSize = 16.sp),
+                        modifier = Modifier.padding(
+                            top = 8.dp,
+                            start = 8.dp
+                        ),
+                        style = TextStyle(fontSize = 15.sp),
                         color = Color.White
                     )
                     AsyncImage(
-                        model = "https://cdn.weatherapi.com/weather/64x64/day/113.png",
+                        model = "https://cdn.weatherapi.com/weather/64x64/day/116.png",
                         contentDescription = "im2",
                         modifier = Modifier
-                            .size(45.dp)
-                            .padding(top = 3.dp, end = 8.dp)
+                            .padding(
+                                top = 8.dp,
+                                end = 8.dp
+                            )
+                            .size(35.dp)
                     )
                 }
                 Text(
-                    text = "Berlin",
+                    text = "Madrid",
                     style = TextStyle(fontSize = 24.sp),
                     color = Color.White
                 )
                 Text(
-                    text = "28°С",
+                    text = "23ºC",
                     style = TextStyle(fontSize = 65.sp),
                     color = Color.White
                 )
@@ -80,7 +80,11 @@ fun MainCard() {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(
+                        onClick = {
+
+                        }
+                    ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_search),
                             contentDescription = "im3",
@@ -88,11 +92,15 @@ fun MainCard() {
                         )
                     }
                     Text(
-                        text = "31°C/24°C",
+                        text = "23ºC/12ºC",
                         style = TextStyle(fontSize = 16.sp),
                         color = Color.White
                     )
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(
+                        onClick = {
+
+                        }
+                    ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_sync),
                             contentDescription = "im4",
@@ -107,40 +115,77 @@ fun MainCard() {
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun TabLayout(){
-    val tabList = listOf("HOURS","DAYS")
+fun TabLayout() {
+    val tabList = listOf("HOURS", "DAYS")
     val pagerState = rememberPagerState()
     val tabIndex = pagerState.currentPage
     val coroutineScope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
-            .padding(start = 5.dp, end = 5.dp)
+            .padding(
+                start = 5.dp,
+                end = 5.dp
+            )
             .clip(RoundedCornerShape(5.dp))
     ) {
         TabRow(
             selectedTabIndex = tabIndex,
             indicator = { pos ->
-                TabRowDefaults.Indicator(Modifier.pagerTabIndicatorOffset(pagerState,pos))
+                TabRowDefaults.Indicator(
+                    Modifier.pagerTabIndicatorOffset(pagerState, pos)
+                )
             },
             backgroundColor = BlueLight,
             contentColor = Color.White
         ) {
             tabList.forEachIndexed { index, text ->
-                Tab(selected = false, onClick = {
-                    coroutineScope.launch {
-                        pagerState.animateScrollToPage(index)
+                Tab(
+                    selected = false,
+                    onClick = {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(index)
+                        }
+                    },
+                    text = {
+                        Text(text = text)
                     }
-                },
-                    text = { Text(text = text) })
+                )
             }
         }
-        HorizontalPager(count = tabList.size, state = pagerState, modifier = Modifier.weight(1.0f)) {
-            index ->
-            LazyColumn(modifier = Modifier.fillMaxSize()
-            ){
-                items(15){
-                    ListItem()
+        HorizontalPager(
+            count = tabList.size,
+            state = pagerState,
+            modifier = Modifier.weight(1.0f)
+        ) { index ->
+            LazyColumn(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                itemsIndexed(
+                    listOf(
+                        WeatherModel(
+                            "London",
+                            "10:00",
+                            "25ºC",
+                            "Sunny",
+                            "//cdn.weatherapi.com/weather/64x64/day/176.png",
+                            "",
+                            "",
+                            ""
+                        ),
+                        WeatherModel(
+                            "London",
+                            "26/07/2022",
+                            "",
+                            "Sunny",
+                            "//cdn.weatherapi.com/weather/64x64/day/176.png",
+                            "26º",
+                            "12º",
+                            "qwertyqwertyqwerty"
+                        )
+                    )
+                ) { _, item ->
+                    ListItem(item)
                 }
             }
         }
